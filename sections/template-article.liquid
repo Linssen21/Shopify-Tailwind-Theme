@@ -1,13 +1,26 @@
-<h1>{{ article.title }}</h1>
 
-<small>{{ article.author }}</small>
+<!-- Loop throughout the section blocks so we can easily change the order of the sections -->
+{% for block in section.blocks %}
+    {% case block.type %}
+        {% when 'article_title' %}
+            <h1>{{ article.title }}</h1>
+        {% when 'article_author' %}
+            {% if section.settings.enable_author %}
+            <small>{{ article.author }}</small>
+            {% endif %}
+        {% when 'article_published_date' %} 
+            {% if section.settings.enable_published_date %}
+            <time datetime="{{ article.published_at | date: '%Y-%m-%d' }}">{{ article.published_at | date: '%Y-%m-%d' }}</time>
+            {% endif %}
+        {% when 'featured_image' %}
+            <img src="{{ article.image.src | img_url: 'large' }}" loading="lazy" alt="{{ article.image.alt }}" width="500" height="500">
+        {% when 'article_content' %}
+            <div class="">{{ article.content }}</div>
+        {% else %}
+            
+    {% endcase %}
+{% endfor %}
 
-
-<time datetime="{{ article.published_at | date: '%Y-%m-%d' }}">{{ article.published_at | date: '%Y-%m-%d' }}</time>
-
-<img src="{{ article.image.src | img_url: 'large' }}" loading="lazy" alt="{{ article.image.alt }}" width="500" height="500">
-
-<div class="">{{ article.content }}</div>
 
 
 {% schema %}
@@ -27,6 +40,36 @@
             "default": true,
             "label": "Display Published Date"
         }
+    ],
+    "blocks": [
+        {
+            "type": "article_title",
+            "name": "Title",
+            // limit to 1 can only be used once
+            "limit": 1
+        },
+        {
+            "type": "article_author",
+            "name": "Author",
+            // limit to 1 can only be used once
+            "limit": 1
+        },
+        {
+            "type": "article_published_date",
+            "name": "Published Date",
+            "limit": 1
+        },
+        {
+            "type": "featured_image",
+            "name": "Thumbnail",
+            "limit": 1
+        },
+        {
+            "type": "article_content",
+            "name": "Content",
+            "limit": 1
+        }
+
     ]
 }
 {% endschema %}
