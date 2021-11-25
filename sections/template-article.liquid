@@ -1,25 +1,50 @@
+<!-- Needs to be under Article Tag to be SEO Friendly -->
+<article class="py-8">
 <!-- https://shopify.dev/themes/architecture/sections/section-schema#blocks -->
 <!-- Loop throughout the section blocks so we can easily change the order of the sections -->
 {% for block in section.blocks %}
     {% case block.type %}
         {% when 'article_title' %}
-            <h1>{{ article.title }}</h1>
+        <div class="flex items-center justify-center py-3">
+            <div class="max-w-7xl text-center">
+                <a href="{{ blog.url }}" class="text-base uppercase text-gray-500 hover:text-gray-900 font-bold">{{ blog.title }}</a>
+                <h1 class="text-4xl md:text-6xl font-medium">{{ article.title }}</h1>
+            </div>
+        </div>
+          
         {% when 'article_author' %}
-            {% if section.settings.enable_author %}
-            <small>{{ article.author }}</small>
-            {% endif %}
-        {% when 'article_published_date' %} 
-            {% if section.settings.enable_published_date %}
-            <time datetime="{{ article.published_at | date: '%Y-%m-%d' }}">{{ article.published_at | date: '%Y-%m-%d' }}</time>
-            {% endif %}
+        <div class="flex items-center justify-center py-2">
+            <div class="max-w-7xl text-center">
+                {% if section.settings.enable_author %}
+                    <small>{{ article.author }}</small>
+                {% endif %}
+            </div>
+        </div>
+        {% when 'article_published_date' %}
+            <div class="flex items-center justify-center justify-center py-2">
+                <div class="max-w-7xl text-center">
+                    {% if section.settings.enable_published_date %}
+                        <time datetime="{{ article.published_at | date: '%Y-%m-%d' }}">{{ article.published_at | date: format: 'on_date' }}</time>
+                    {% endif %}
+                </div>
+            </div> 
         {% when 'featured_image' %}
-            <img src="{{ article.image.src | img_url: 'large' }}" loading="lazy" alt="{{ article.image.alt }}" width="500" height="500">
+        <div class="max-w-7xl bg-blue-100 rounded-lg mx-2 md:mx-auto overflow-hidden my-4">
+            {% if article.image != blank %}
+                <img class="w-full h-80 md:h-96 object-cover object-center " src="{{ article.image.src | img_url: 'large' }}" loading="lazy" alt="{{ article.image.alt }}" width="500" height="500">
+            {% else %}
+                {% assign placeholder_image = 'lifestyle-1' %}
+                {{ placeholder_image | placeholder_svg_tag: 'w-full h-80 md:h-96 object-cover object-center p-5' }}
+            {% endif %}
+        </div>
         {% when 'article_content' %}
-            <div class="">{{ article.content }}</div>
+            <div class="flex items-center justify-center"><div class="max-w-4xl">{{ article.content }}</div></div>
         {% else %}
             
     {% endcase %}
 {% endfor %}
+</article>
+
 
 
 
