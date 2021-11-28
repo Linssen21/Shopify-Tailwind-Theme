@@ -1,0 +1,22 @@
+{% paginate blog.articles by 3 %}
+    {% for article in blog.articles %}
+
+    <div>
+        {% if article.image  %}
+            <img class="w-20" src="{{ article.image | img_url: 'medium' }}" alt="{{ article.image.alt }}" loading="lazy"  width="{{ article.image.width }}"
+            height="{{ article.image.height }}">
+        {% else %}
+        <!-- Return the default image -->
+            {{ 'image' | placeholder_svg_tag: 'w-20' }}
+        {% endif %}
+        <h2>{{ article.title }}</h2>
+        {% if article.excerpt.size > 0 %}
+
+        {% else %}
+            <p>{{ article.content | strip_html | truncatewords: 15, '...' }}</p>
+            
+        {% endif %}
+    </div>
+        
+    {% endfor %}
+{% endpaginate %}
