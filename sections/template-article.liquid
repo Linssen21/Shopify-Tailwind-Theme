@@ -3,8 +3,11 @@
 
     itemscope itemtype="https://schema.org/BlogPosting"
         - Let Search Engine knows that the artilce is about BlogPosting
+    
+    Check using Search Result Tool
+        - https://search.google.com/test/rich-results
  -->
-<article class="py-8" itemscope itemtype="https://schema.org/BlogPosting">
+<article class="py-8" itemscope itemtype="http://schema.org/BlogPosting">
 <!-- https://shopify.dev/themes/architecture/sections/section-schema#blocks -->
 <!-- Loop throughout the section blocks so we can easily change the order of the sections -->
 {% for block in section.blocks %}
@@ -155,7 +158,38 @@
     </div>
 {% endif %}
 
+<!-- JSON-LD for SEO
+        - Use http instead of https
+-->
+<script type="application/ld+json">
+    // strip_html - remove all html on the content
+    //  json - Json filter
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": {{ article.title | json }},
+        "articleBody": {{ article.content | strip_html | json }},
 
+        {% if article.excerpt != blank %}
+            "description": {{ article.excerpt | strip_html | json }},
+        {% endif %}
+        {% if article.image %}
+            "image": [
+                {{ article.image | img_url: "medium" | prepend: 'https:' | json }}
+            ],
+        {% endif %}
+        "datePublished": {{ article.published_at | date: format: "default" | json }},
+        "dateCreated": {{ article.created_at | date: format: "default" | json }},
+        "author": {
+            "@type": "Person",
+            "name": {{ article.author | json }}
+        },
+        "publisher": {
+            "@type": "Organization",
+            "name": {{ shop.name | json }}
+        }
+    }
+</script>
 
 
 {% schema %}
