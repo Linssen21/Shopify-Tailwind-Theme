@@ -16,6 +16,7 @@
             </div>
         </div>
         {% render 'pagination', pagination: paginate %}
+
     {% endpaginate %}
     
     </div>
@@ -28,8 +29,7 @@
                 "type": "number",
                 "id": "number_of_products_per_page",
                 "label": "Number of products per page",
-                "min": 1,
-                "max": 12,
+                
                 "default": 6
             }
         ]
