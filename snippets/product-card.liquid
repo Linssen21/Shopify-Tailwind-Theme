@@ -4,11 +4,11 @@
         <a href="{{ product.url }}">
             {% if product.featured_image %}
             <div class="overflow-hidden">
-                <img class="w-full h-60 object-cover" width="200" height="200" loading="lazy" src="{{ product.featured_image | img_url: "medium" }}" alt="{{ product.featured_image.alt }}">
+                <img class="w-full h-60 object-cover transition duration-1000 ease-in-out hover:scale-105 transform" width="200" height="200" loading="lazy" src="{{ product.featured_image | img_url: "medium" }}" alt="{{ product.featured_image.alt }}">
                 
             </div>
             {% else %}
-                {{ 'product-1' | placeholder_svg_tag: 'w-full h-60 object-cover bg-gray-100' }}
+                {{ 'product-1' | placeholder_svg_tag: 'w-full h-60 object-cover bg-gray-100  transition duration-1000 ease-in-out hover:scale-105 transform' }}
             {% endif %}
         
         </a>
