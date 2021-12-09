@@ -1,0 +1,53 @@
+<div class="flex flex-col items-center my-8">
+  <h1 class="text-3xl font-medium">{{ section.settings.title }}</h1>
+
+  <div class="mx-w-6xl mx-auto my-3">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+        {% for collection in collections %}
+
+        {% if collection.all_products_count > 0 %}
+          
+          <div class="w-full py-6 px-3">
+              <div class="border bg-white overflow-hidden">
+                <a href="{{ collection.url }}">
+                  <div class="h-72 overflow-hidden">
+                    {% if collection.featured_image != blank %}
+                    <!-- Get the collection image -->
+                      {% assign collection_image = collection.featured_image %}
+                    {% else %}
+                    <!-- Get the collection of the first product if the collection does not have an image -->
+                      {% assign collection_image = collection.products.first.image %}
+                    {% endif %}
+                    <!-- {% echo collection_image %} -->
+                    <img class="w-full h-full object-cover transform transition duration-100 ease-in-out hover:scale-105" loading="lazy" width="200" height="200" src="{{ collection_image | img_url: 'medium' }}" alt="{{ collection.title }}">
+                  </div>
+                </a>
+                <div class="p-4 bg-gray-100">
+                  <h2 class="text-xl">{{ collection.title }}</h2>
+                </div>
+              </div>
+          </div>
+      
+        {% endif %}
+        
+      {% endfor %}
+    </div>
+  </div>
+</div>
+
+
+
+
+{% schema %}
+{
+  "name": "Template List Collections",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "default": "Collections",
+      "label": "title"
+    }
+  ]
+}
+{% endschema %}
