@@ -1,5 +1,6 @@
 {% assign media = media | default: false %}
-<!-- {% echo media.media_type %} -->
+
+
 {% case media.media_type %}
     {% when 'image' %}
         <img width="1920" height="1080" loading="lazy" src="{{ media | img_url: 'large' }}" alt="{{ media.preview_image.alt }}" class="w-full h-full object-hover">
