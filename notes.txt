@@ -1,0 +1,25 @@
+- to Create a shopify theme use the init command
+    shopify theme init ShopWind --clone-url https://github.com/Linsssenn/Shopify-Tailwind-CSS.git
+- Login to Shopify
+    shopify login --store https://shopwind01.myshopify.com/admin
+- Run the Theme
+    shopfiy theme serve
+- Check who is login
+    shopify whoami
+
+- Creating tailwindcss config file
+    npx tailwindcss init
+- Installing tailwind css
+    npx tailwindcss -i ./src/tailwind.css -o ./assets/application.css
+- Get icons in svg and jsx format
+    https://heroicons.com/
+- Alpine JS works like JQuery
+
+
+Shopify JSON Templates
+    - Can only be added on the templates folder
+    - the 't' object is accessed on the locales folder (<h1>{{ 'general.404.title' | t }}</h1>)
+
+Routes Object
+    - Use Routes instead of adding the actual url 
+    {{ routes.cart_url }}
