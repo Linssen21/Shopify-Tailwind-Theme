@@ -1,0 +1,104 @@
+<!-- /templates/customers/order.liquid -->
+
+{% comment %} <h2>Billing Address</h2>
+<p><span>Payment Status:</span> <span class="status_{{ order.financial_status }}">{{ order.financial_status }}</span></p>
+<p>{{ order.billing_address.name }}</p>
+<p>{{ order.billing_address.company }}</p>
+<p>{{ order.billing_address.street }}</p>
+<p>{{ order.billing_address.city }}, {{ order.billing_address.province }}</p>
+<p>{{ order.billing_address.country }} {{ order.billing_address.zip }}</p>
+<p>{{ order.billing_address.phone }}</p>
+
+<h2>Shipping Address</h2>
+<p><span>Fulfillment Status:</span><span class="status_{{ order.fulfillment_status }}">{{ order.fulfillment_status }}</span></p>
+<p>{{ order.shipping_address.name }}</p>
+<p>{{ order.shipping_address.company }}</p>
+<p>{{ order.shipping_address.street }}</p>
+<p>{{ order.shipping_address.city }}, {{ order.shipping_address.province }}</p>
+<p>{{ order.shipping_address.country }} {{ order.shipping_address.zip }}</p>
+<p>{{ order.shipping_address.phone }}</p>
+
+<h2>Order Items</h2>
+<table>
+  {% for line_item in order.line_items %}
+  <tr>
+    <td>{{ line_item.title | link_to: line_item.product.url }}</td>
+    <td>{{ line_item.sku }}</td>
+    <td>{{ line_item.original_price | money }}</td>
+    <td>{{ line_item.quantity }}</td>
+    <td>{{ line_item.line_price | money }}</td>
+  </tr>
+  {% endfor %}
+</table> {% endcomment %}
+
+
+<div class="max-w-6xl mx-auto px-4 py-12">
+    <div class="flex items-start md:items-end justify-between my-5">
+        <div class="w-1/2">
+            <h1 class="text-2xl font-bold text-gray-700 ">Order {{ order.name }}</h1>
+
+            <p class="text-gray-500 my-2">Placed on {{ order.created_at | date: format: 'date' }}</p>
+
+            <span class="text-small text-white bg-gray-700 rounded-full my-2 px-4 py-1">{{ order.financial_status_label }}</span>
+            </div>
+            
+
+            <a href="{{ routes.account_url }}" class="text-blue-700 hover:text-blue-900 underline font-medium">Back to account</a>
+        </div>
+        <h2>Order Items</h2>
+        <div>
+            {% for line_item in order.line_items %}
+               <div class="w-full border border-gray-200 divide-y rounded-sm mb-4">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-12 p-4 md:p-12">
+                
+                    <div class="w-full h-80 min-h-80 bg-gray-200 rounded-md overflow-hidden border">
+                        {% if line_item.image %}
+                            {{ line_item.image | image_url: width: 400, height: 400 | image_tag: srcset: nil, class: 'w-full h-full object-center object-cover' }}
+                        {% else %}
+                            {{ 'product-1' | placeholder_svg_tag: 'w-full h-full object-center object-cover' }}
+                        {% endif %}
+                    </div>
+
+                    <div>
+                        <h3 class="text-xl font-medium mb-4">{{ line_item.title | link_to: line_item.product.url }}</h3>
+                        <table class="table-auto w-full mb-4">
+                            <tbody>
+                                <tr>
+                                    <td class="border border-gray-200 px-4 py-2">Price</td>
+                                    <td class="border border-gray-200 px-4 py-2">{{ line_item.original_price | money }}</td>
+                                </tr>
+                                <tr>
+                                    <td class="border border-gray-200 px-4 py-2">Quantity</td>
+                                    <td class="border border-gray-200 px-4 py-2">{{ line_item.quantity }}</td>
+                                </tr>
+                                <tr>
+                                    <td class="border border-gray-200 px-4 py-2">Final Price</td>
+                                    <td class="border border-gray-200 px-4 py-2">{{ line_item.final_line_price | money }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <div class="text-gray-500 mb-4">
+                        {{ line_item.product.description | truncatewords: 15 }}</div>
+                    </div>
+
+                    <div>
+                        <h3 class="font-medium mb-4">Delivery address</h3>
+                        <div class="text-gray-500 mb-4">
+                            {% comment %} {{ order.shipping_address | format_address }} {% endcomment %}
+                            <p>Address 1: {{ order.shipping_address.address1 }}</p>
+                            <p>Address 2: {{ order.shipping_address.address2 }}</p>
+                            <p>Street: {{ order.shipping_address.street }}</p>
+                            <p>Province: {{ order.shipping_address.province }}</p>
+                            <p>City: {{ order.shipping_address.city }}</p>
+                            <p>ZIP: {{ order.shipping_address.zip }}</p>
+                            <p>Country: {{ order.shipping_address.country }}</p>
+                        </div>
+                    </div>
+
+                </div>
+                </div>
+            {% endfor %}
+       
+    </div>
+</div>
