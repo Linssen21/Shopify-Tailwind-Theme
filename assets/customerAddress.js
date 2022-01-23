@@ -1,6 +1,6 @@
 class CustomerAddress{
     constructor(){
-       this.initCustomerAddress();
+        this.initCustomerAddress();
        this.customerAddressesSelector();
     }
 
@@ -20,7 +20,7 @@ class CustomerAddress{
             const provinces = selectedCountry.dataset.provinces;
             const arrayOfProvince = JSON.parse(provinces);
 
-            let provinceSelector = document.querySelector[`#address_province_${select.dataset.id}`]
+            let provinceSelector = document.querySelector(`#address_province_${select.dataset.id}`);
             
             console.log(provinceSelector);
 
@@ -62,7 +62,7 @@ class CustomerAddress{
     }
 
     customerAddressesSelector(){
-        const addAddressesSelector = document.querySelectorAll("select[data-country-selector]");
+        let addAddressesSelector = document.querySelectorAll("select[data-country-selector]");
 
         if(addAddressesSelector.length < 1) return;
 
@@ -78,11 +78,11 @@ class CustomerAddress{
                 const provinces = this.options[this.selectedIndex].dataset.provinces;
                 const arrayOfProvince = JSON.parse(provinces);
 
-                
+                console.log(this.dataset.id);
 
-                const provinceSelector = document.querySelector(`#address_province_${this.dataset.id}`);
-
-                // console.log(provinceSelector);
+                // const provinceSelector = document.querySelector(`#address_province_${this.dataset.id}`);
+                const provinceSelector = document.querySelector(`#address_province_${select.dataset.id}`);
+               
 
                 if(arrayOfProvince.length < 1){
                     provinceSelector.setAttribute('disabled', 'disabled')
