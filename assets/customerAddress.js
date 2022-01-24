@@ -1,7 +1,31 @@
 class CustomerAddress{
     constructor(){
         this.initCustomerAddress();
-       this.customerAddressesSelector();
+        this.customerAddressesSelector();
+        this.initDeleteAddressButtons();
+    }
+
+    initDeleteAddressButtons(){
+        const deleteButtons = document.querySelectorAll('button[data-delete-address]');
+
+        if(deleteButtons.length < 1) return;
+
+        deleteButtons.forEach(button => {
+            button.addEventListener('click', function(event){
+
+                const url = this.dataset.url;
+                console.log('Delete Clicked', url)
+
+                const confirmation = window.confirm("Do you really wish to delete this address?");
+
+                if(confirmation){
+                    document.querySelector(`form[action="${url}"]`).submit();
+                }
+              
+            })
+        });
+
+
     }
 
     // runs onload
