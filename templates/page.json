@@ -1,8 +1,28 @@
 {
-    "sections": {
-        "template": {
-            "type": "template-page"
-        }
+  "sections": {
+    "template": {
+      "type": "template-page",
+      "settings": {
+      }
     },
-    "order": ["template"]
+    "1646576055a347ca65": {
+      "type": "contact-form",
+      "settings": {
+        "title": ""
+      }
+    },
+    "1646576064b439bd1a": {
+      "type": "featured-collection",
+      "settings": {
+        "title": "Featured Collection",
+        "featured_collection": "",
+        "number_of_products_to_show": 4
+      }
+    }
+  },
+  "order": [
+    "template",
+    "1646576055a347ca65",
+    "1646576064b439bd1a"
+  ]
 }
